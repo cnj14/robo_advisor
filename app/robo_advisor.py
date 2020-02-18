@@ -10,7 +10,7 @@ load_dotenv()
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default = "oops")
 SYMBOL = input("Please input a company ticker: ")
-request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={SYMBOL}&interval=5min&apikey={API_KEY}"
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={SYMBOL}&apikey={API_KEY}"
 print("URL:", request_url)
 
 response = requests.get(request_url)
@@ -19,9 +19,10 @@ if "Error Message" in response.text:
     exit()
 parsed_response = json.loads(response.text)
 
+#print(parsed_response)
 
-
-print(parsed_response)
+tsd = parsed_response["Time Series (Daily)"]
+print(tsd)
 
 
 # print("-------------------------")
