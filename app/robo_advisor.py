@@ -14,7 +14,12 @@ request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&
 print("URL:", request_url)
 
 response = requests.get(request_url)
+if "Error Message" in response.text:
+    print("Error received")
+    exit()
 parsed_response = json.loads(response.text)
+
+
 
 print(parsed_response)
 
