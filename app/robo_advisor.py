@@ -4,6 +4,7 @@ import requests
 import json
 import os
 from dotenv import load_dotenv
+import csv
 
 load_dotenv()
 
@@ -24,6 +25,11 @@ while count < n:
             parsed_response = json.loads(response.text)
             tsd = parsed_response["Time Series (Daily)"]
             print(tsd["2020-02-18"])
+            csv_file_path = f"data/{SYMBOL}.csv"
+            with open(csv_file_path,"w") as csv_file:
+                writer = csv.DictWriter(csv_file, fieldnames=["heading1", "heading2"])
+                writer.writeheader()
+                writer.writerow({"heading1": "item1", "heading2": "cool"})
             count+=1
     else:
         print("Please try a an alphabetic ticker with 5 or fewer letters.")
