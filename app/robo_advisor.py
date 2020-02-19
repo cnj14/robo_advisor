@@ -48,55 +48,33 @@ if n.isnumeric() == True:
                     all_highs = []
                     all_lows = []
                     for row in reader:
-                        close = row["close"]
+                        close = float(row["close"])
                         all_closes.append(close)
-                        high = row["high"]
+                        high = float(row["high"])
                         all_highs.append(high)
-                        low = row["low"]
+                        low = float(row["low"])
                         all_lows.append(low)
-                    last_close = float(all_closes[0])
+                    last_close = (all_closes[0])
                     last_close = '${:,.2f}'.format(last_close)
-                    all_highs.sort()
-                    recent_max = float(all_highs[-1])
+                    recent_max = max(all_highs)
                     recent_max = '${:,.2f}'.format(recent_max)
-                    all_lows.sort()
-                    recent_min = float(all_lows[0])
+                    recent_min = min(all_lows)
                     recent_min = '${:,.2f}'.format(recent_min)
                 print(f"Most recent closing price: {last_close}")
                 print(f"Recent high price: {recent_max}")
                 print(f"Recent low price: {recent_min}")
                 print("------------------------------------")
                 print("------------------------------------")
+                print("RUNNING PROPRIETARY INVESTMENT ALGORITHM...")
+
                 print("------------------------------------")
                 count+=1
         else:
             print("Please try an alphabetic ticker with 5 or fewer letters.")
+    print("Thank you for using the Robo Advisor! Happy investing :)")
 else:
     print("Invalid number of stocks entered. Please run code again!")
     exit()
 
 
-
-#print(parsed_response)
-
-# tsd = parsed_response["Time Series (Daily)"]
-# print(tsd)
-
-
-# print("-------------------------")
-# print("SELECTED SYMBOL: XYZ")
-# print("-------------------------")
-# print("REQUESTING STOCK MARKET DATA...")
-# print("REQUEST AT: 2018-02-20 02:00pm")
-# print("-------------------------")
-# print("LATEST DAY: 2018-02-20")
-# print("LATEST CLOSE: $100,000.00")
-# print("RECENT HIGH: $101,000.00")
-# print("RECENT LOW: $99,000.00")
-# print("-------------------------")
-# print("RECOMMENDATION: BUY!")
-# print("RECOMMENDATION REASON: TODO")
-# print("-------------------------")
-# print("HAPPY INVESTING!")
-# print("-------------------------")
 
