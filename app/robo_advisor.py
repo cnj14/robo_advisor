@@ -20,11 +20,11 @@ while count < n:
     chars = list(SYMBOL)
     if SYMBOL.isalpha()==True and len(chars)<=5:
         request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={SYMBOL}&apikey={API_KEY}"
-        print("URL:", request_url)
         response = requests.get(request_url)
         if "Error Message" in response.text:
             print("Error received; please try again! Enter a valid ticker such as 'AAPL' or 'VZ'.")
         else:
+            print("ACCESSING DATA...")
             parsed_response = json.loads(response.text)
             tsd = parsed_response["Time Series (Daily)"]
             mdata = parsed_response["Meta Data"]
@@ -39,6 +39,32 @@ while count < n:
             print(f"Program run at {current_time}")
             latest = mdata["3. Last Refreshed"]
             print(f"Latest data from {latest}")
+            print("------------------------------------")
+            with open(csv_file_path, "r") as csv_file: 
+                reader = csv.DictReader(csv_file) 
+                all_closes = []
+                all_highs = []
+                all_lows = []
+                for row in reader:
+                    close = row["close"]
+                    all_closes.append(close)
+                    high = row["high"]
+                    all_highs.append(high)
+                    low = row["low"]
+                    all_lows.append(low)
+                last_close = float(all_closes[0])
+                last_close = '${:,.2f}'.format(last_close)
+                all_highs.sort()
+                recent_max = float(all_highs[-1])
+                recent_max = '${:,.2f}'.format(recent_max)
+                all_lows.sort()
+                recent_min = float(all_lows[0])
+                recent_min = '${:,.2f}'.format(recent_min)
+            print(f"Most recent closing price: {last_close}")
+            print(f"Recent high price: {recent_max}")
+            print(f"Recent low price: {recent_min}")
+            print("------------------------------------")
+            print("------------------------------------")
             print("------------------------------------")
             count+=1
     else:
