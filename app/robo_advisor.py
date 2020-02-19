@@ -9,20 +9,31 @@ load_dotenv()
 
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default = "oops")
-SYMBOL = input("Please input a company ticker: ")
-request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={SYMBOL}&apikey={API_KEY}"
-print("URL:", request_url)
+count = 0
+n = int(input("How many stocks would you like to consider? "))
+while count < n:
+    SYMBOL = input("Please input a company ticker: ")
+    chars = list(SYMBOL)
+    if SYMBOL.isalpha()==True and len(chars)<=5:
+        request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={SYMBOL}&apikey={API_KEY}"
+        print("URL:", request_url)
+        response = requests.get(request_url)
+        if "Error Message" in response.text:
+            print("Error received; please try again! Enter a valid ticker such as 'AAPL' or 'VZ'.")
+        else:
+            parsed_response = json.loads(response.text)
+            tsd = parsed_response["Time Series (Daily)"]
+            print(tsd["2020-02-18"])
+            count+=1
+    else:
+        print("Please try a an alphabetic ticker with 5 or fewer letters.")
 
-response = requests.get(request_url)
-if "Error Message" in response.text:
-    print("Error received")
-    exit()
-parsed_response = json.loads(response.text)
+
 
 #print(parsed_response)
 
-tsd = parsed_response["Time Series (Daily)"]
-print(tsd)
+# tsd = parsed_response["Time Series (Daily)"]
+# print(tsd)
 
 
 # print("-------------------------")
