@@ -6,6 +6,10 @@ import os
 from dotenv import load_dotenv
 import csv
 from datetime import datetime
+import statistics
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
 
 load_dotenv()
 
@@ -47,6 +51,7 @@ if n.isnumeric() == True:
                     all_closes = []
                     all_highs = []
                     all_lows = []
+                    dates = []
                     for row in reader:
                         close = float(row["close"])
                         all_closes.append(close)
@@ -54,6 +59,8 @@ if n.isnumeric() == True:
                         all_highs.append(high)
                         low = float(row["low"])
                         all_lows.append(low)
+                        date = row["timestamp"]
+                        dates.append(date)
                     last_close = (all_closes[0])
                     last_close = '${:,.2f}'.format(last_close)
                     recent_max = max(all_highs)
@@ -63,10 +70,23 @@ if n.isnumeric() == True:
                 print(f"Most recent closing price: {last_close}")
                 print(f"Recent high price: {recent_max}")
                 print(f"Recent low price: {recent_min}")
+                for p in all_closes:
+                    p = "${0:.2f}".format(p)
+                all_closes.reverse()
+                fig1, ax = plt.subplots()
+                ax.plot(dates, all_closes)
+                formatter = ticker.FormatStrFormatter('$%1.2f')
+                ax.yaxis.set_major_formatter(formatter)
+                plt.title(f"{SYMBOL} Stock (Last 100 Days)")
+                fig1.autofmt_xdate()
+                every_nth = 9
+                for n, label in enumerate(ax.xaxis.get_ticklabels()):
+                    if n % every_nth != 0:
+                        label.set_visible(False)
+                plt.show()
                 print("------------------------------------")
                 print("------------------------------------")
                 print("RUNNING PROPRIETARY INVESTMENT ALGORITHM...")
-
                 print("------------------------------------")
                 count+=1
         else:
