@@ -24,12 +24,12 @@ while count < n:
         else:
             parsed_response = json.loads(response.text)
             tsd = parsed_response["Time Series (Daily)"]
-            print(tsd["2020-02-18"])
             csv_file_path = f"data/{SYMBOL}.csv"
             with open(csv_file_path,"w") as csv_file:
-                writer = csv.DictWriter(csv_file, fieldnames=["heading1", "heading2"])
+                writer = csv.DictWriter(csv_file, fieldnames=["timestamp", "open","high","low","close","volume"])
                 writer.writeheader()
-                writer.writerow({"heading1": "item1", "heading2": "cool"})
+                for date,values in tsd.items():
+                    writer.writerow({"timestamp": date, "open": values["1. open"], "high": values["2. high"], "low": values["3. low"], "close": values["4. close"], "volume": values["5. volume"]})
             count+=1
     else:
         print("Please try a an alphabetic ticker with 5 or fewer letters.")
