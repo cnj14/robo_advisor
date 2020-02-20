@@ -18,5 +18,6 @@ conda create -n stocks-env python=3.7 # (first time only)
 conda activate stocks-env
 
 pip install -r requirements.txt
+pip install matplotlib
 
 python app/robo_advisor.py
