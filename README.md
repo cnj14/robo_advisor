@@ -1,23 +1,27 @@
 # robo_advisor
 
 
-PATH:
-/Users/christopherjayson/Desktop/robo_advisor
+1. Clone this repo to your computer and access via GitHub desktop
 
-API setup:
+2. API setup: Obtain an API key at the website below
+
 https://www.alphavantage.co/support/#api-key
 
-Obtain an API key at the website above
+3. Open the repo in your external editor and create a new file in this repo called '.env'
 
-Create a new file in this repo called '.env'
-
-Place the following contents in your .env file with your own API key in the blank:
+4. Place the following contents in your .env file with your own API key in the blank:
 ALPHAVANTAGE_API_KEY = "____________"
 
-conda create -n stocks-env python=3.7 # (first time only)
-conda activate stocks-env
+5. From Github Desktop, open this repo in your command line 
 
-pip install -r requirements.txt
-pip install matplotlib
+6. Run the following five commands to setup the env and run the program!: 
+
+conda create -n stocks-env python=3.7 # (first time only) 
+
+conda activate stocks-env \n
+
+pip install -r requirements.txt 
+
+pip install matplotlib 
 
 python app/robo_advisor.py
