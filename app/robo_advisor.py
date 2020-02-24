@@ -85,6 +85,7 @@ if n.isnumeric() == True:
             ax.yaxis.set_major_formatter(formatter)
             plt.title(f"{SYMBOL} Stock (Last 100 Days)")
             fig1.autofmt_xdate()
+            # https://stackoverflow.com/questions/6682784/reducing-number-of-plot-ticks/13418954#13418954
             every_nth = 9
             for n, label in enumerate(ax.xaxis.get_ticklabels()):
                 if n % every_nth != 0:
