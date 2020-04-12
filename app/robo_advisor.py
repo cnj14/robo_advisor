@@ -35,20 +35,20 @@ def get_symbols():
     count = 0
     if __name__ == "__main__":
         n = (input("How many stocks would you like to consider? "))
-    if n.isnumeric() == True:
-        n = int(n)
-        if __name__ == "__main__":
-            while count < n:
-                SYMBOL = input("Please input a company ticker: ")
-                chars = list(SYMBOL)
-                if SYMBOL.isalpha()==True and len(chars)<=5:
-                    symbols.append(SYMBOL)
-                    count +=1
-                else:
-                    print("Please try an alphabetic ticker with 5 or fewer letters.")
-    else:
-        print("Invalid number of stocks entered. Please run code again!")
-        exit()
+        if n.isnumeric() == True:
+            n = int(n)
+        else:
+            print("Invalid number of stocks entered. Please run code again!")
+            exit()
+    if __name__ == "__main__":
+        while count < n:
+            SYMBOL = input("Please input a company ticker: ")
+            chars = list(SYMBOL)
+            if SYMBOL.isalpha()==True and len(chars)<=5:
+                symbols.append(SYMBOL)
+                count +=1
+            else:
+                print("Please try an alphabetic ticker with 5 or fewer letters.")
     return symbols
 
 def get_response(symbol):
@@ -79,13 +79,15 @@ def transform_response(parsed_response):
         rows.append(row)
     return rows
 
-def csv_writer(rows, filepath):
+def csv_writer(symbol, rows):
     """
     Writes to a new file for stock data, converting dictionary element into CSV format.
     Files stored locally in data folder but hidden from master repo using gitignore.
     """
+    symbol = symbol.upper()
+    filepath = f"data/{symbol}.csv"
     with open(filepath, 'w') as csv_file:
-        writer = csv_DictWriter(csv_file, fieldnames = ['timestamp', 'open', 'high', 'low', 'close', 'volume'])
+        writer = csv.DictWriter(csv_file, fieldnames = ['timestamp', 'open', 'high', 'low', 'close', 'volume'])
         writer.writeheader()
         for row in rows:
             writer.writerow(row)
@@ -111,6 +113,7 @@ for SYMBOL in symbols:
     parsed_response = get_response(SYMBOL)
     latest = parsed_response["Meta Data"]["3. Last Refreshed"]
     rows = transform_response(parsed_response)
+    csv_writer(SYMBOL,rows)
     last_close = rows[0]['close']
     high_prices = [row["high"] for row in rows]
     low_prices = [row["low"] for row in rows]
