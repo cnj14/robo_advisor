@@ -79,13 +79,13 @@ def transform_response(parsed_response):
         rows.append(row)
     return rows
 
-def csv_writer(symbol, rows):
+def csv_writer(symbol, folder, rows):
     """
     Writes to a new file for stock data, converting dictionary element into CSV format.
     Files stored locally in data folder but hidden from master repo using gitignore.
     """
     symbol = symbol.upper()
-    filepath = f"data/{symbol}.csv"
+    filepath = os.path.join(os.path.dirname(__file__), "..", f"{folder}", f"{symbol}.csv")
     with open(filepath, 'w') as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames = ['timestamp', 'open', 'high', 'low', 'close', 'volume'])
         writer.writeheader()
@@ -113,7 +113,7 @@ for SYMBOL in symbols:
     parsed_response = get_response(SYMBOL)
     latest = parsed_response["Meta Data"]["3. Last Refreshed"]
     rows = transform_response(parsed_response)
-    csv_writer(SYMBOL,rows)
+    csv_writer(SYMBOL, 'data', rows)
     last_close = rows[0]['close']
     high_prices = [row["high"] for row in rows]
     low_prices = [row["low"] for row in rows]

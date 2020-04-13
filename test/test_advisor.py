@@ -65,8 +65,8 @@ def test_csv_writer():
     sample = [
         {"timestamp": "2019-06-08", "open": 101.0924, "high": 101.95, "low": 100.54, "close": 101.63, "volume": 22165128}
     ]
-    csv_writer('SAMPLE', sample)
-    filepath = 'data/SAMPLE.csv'
+    csv_writer('SAMPLE', 'test', sample)
+    filepath = os.path.join(os.path.dirname(__file__), "SAMPLE.csv")
     with open(filepath, 'r') as csv_filepath:
         reader = csv.DictReader(csv_filepath)
         for row in reader:
