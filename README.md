@@ -1,5 +1,6 @@
 # robo_advisor
 
+[![Build Status](https://travis-ci.com/cnj14/robo_advisor.svg?branch=master)](https://travis-ci.com/cnj14/robo_advisor)
 
 1. Clone this repo to your computer and access via GitHub desktop
 
@@ -15,14 +16,22 @@ ALPHAVANTAGE_API_KEY = "____________"
 
 5. From Github Desktop, open this repo in your command line 
 
-6. Run the following five commands, one at a time, to setup the env and run the program!: 
-
-conda create -n stocks-env python=3.7 # (first time only) 
-
-conda activate stocks-env \n
-
-pip install -r requirements.txt 
-
-pip install matplotlib 
-
-python app/robo_advisor.py
+6. Run the following commands, one at a time, to setup the env and run/test the program!: 
+```py
+ conda create -n stocks-env python=3.7 # (first time only) 
+ ```
+```py
+ conda activate stocks-env 
+ ```
+```py
+ pip install -r requirements.txt 
+ ```
+```py
+ pip install pytest
+ ```
+```py
+ python app/robo_advisor.py
+ ```
+```py
+ pytest
+ ```
